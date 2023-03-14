@@ -1,6 +1,7 @@
+<div align="center">
 <img src="./images/Logo.png" width=20% height=20%>
-
-# Discord Legacy Patcher
+<h1>Discord Legacy Patcher</h1>
+</div>
 
 Restores Discord Desktop Client functionality on OS X 10.9-macOS 10.12.
 * [ ] 10.8 support
