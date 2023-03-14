@@ -33,5 +33,5 @@ jobs:
       uses: actions/upload-artifact@v3.1.2
       with:
         name: macOS Binary
-        path: /dist/Discord\ Legacy\ Patcher
+        path: /Users/runner/work/Discord-Legacy-Patcher/Discord-Legacy-Patcher/dist/Discord\ Legacy\ Patcher
 
