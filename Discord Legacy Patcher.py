@@ -1,5 +1,5 @@
 import sys, os, tempfile, requests, subprocess, shutil
-
+version = "1.0"
 def clear():
     print("\033c", end='')
 
@@ -145,8 +145,8 @@ def preparepackage(version):
 def mainmenu():
     clear()
     print(
-"""====================================================
-Discord Legacy Patcher 1.0
+f"""====================================================
+Discord Legacy Patcher {version}
 ====================================================
 Discord Legacy Patcher will download the chosen
 build, apply the required patches, and create a 
