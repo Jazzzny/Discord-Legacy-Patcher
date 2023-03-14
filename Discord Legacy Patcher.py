@@ -1,4 +1,4 @@
-import os, tempfile, requests, subprocess, shutil
+import sys, os, tempfile, requests, subprocess, shutil
 
 def clear():
     print("\033c", end='')
@@ -20,17 +20,17 @@ def preflight():
             print(f"✅ Node.js {nodever} installed\n✅ Node Package Manager {npmver} installed")
         else:
             print("❌ Node.js is too old! Please install Node.js 10+.")
-            exit()
+            sys.exit()
     except FileNotFoundError:
         print("❌ Node.js is not installed! Please install Node.js 10+.")
-        exit()
+        sys.exit()
     try:
         output2 = subprocess.check_output(["npx","asar","--version"])
         asarver = output2.decode("utf-8")[1:-1]
         print(f"✅ @electron/asar {asarver} installed")
     except subprocess.CalledProcessError:
         print("❌ Asar library is not installed! Please install it by running 'npm i @electron/asar'.")
-        exit()
+        sys.exit()
     print("====================================================")
 
 def mktemp():
@@ -47,7 +47,7 @@ def copyfiles():
         shutil.copytree("/Volumes/Discord/","./Discord/",symlinks=True) #will try to copy the entire applications folder if set to false
     except:
         print("Could not mount disk image/copy files. Please restart your machine.")
-        exit()
+        sys.exit()
     print("Ejecting disk image")
     subprocess.call(["/usr/bin/hdiutil","eject","/Volumes/Discord"])
 
@@ -161,7 +161,7 @@ patched disk image.
     print("6. Exit")
     choice = int(input("Choose an Option: "))
     if choice == 6:
-        exit()
+        sys.exit()
     else:
         preparepackage(choice)
     
