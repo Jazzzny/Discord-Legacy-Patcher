@@ -28,11 +28,12 @@ jobs:
         npm install -g pkg
     - name: Create Asar Binary
       run: | 
-        npm pack @electron/asar
-        tar -xzf ./*.tgz
-        ls
+        npm pack @electron/asar@3.2.3
+        tar -xzf ./electron-asar-3.2.3.tgz
+        mv ./support/package.json ./package/package.json
         cd package
-        ls
+        npm install .
+        pkg ./package.json --target node10-macos-x64 --compress GZip
     - name: Create PyInstaller Binary
       run: |
         pyinstaller Discord\ Legacy\ Patcher.py --onefile
