@@ -29,9 +29,10 @@ jobs:
     - name: Create Asar Binary
       run: | 
         npm pack @electron/asar
-        tar -xzf ./*
+        tar -xzf ./*.gz
         ls
-        
+        cd package
+        ls
     - name: Create PyInstaller Binary
       run: |
         pyinstaller Discord\ Legacy\ Patcher.py --onefile
