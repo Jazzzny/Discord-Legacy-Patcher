@@ -29,7 +29,7 @@ jobs:
     - name: Create Asar Binary
       run: | 
         npm pack @electron/asar
-        tar -xzf ./*.gz
+        tar -xzf ./*.tgz
         ls
         cd package
         ls
