@@ -1,0 +1,54 @@
+{
+  "name": "@electron/asar",
+  "description": "Creating Electron app packages",
+  "version": "3.2.3",
+  "main": "./lib/asar.js",
+  "types": "./lib/index.d.ts",
+  "bin": {
+    "asar": "./bin/asar.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "lib/index.d.ts"
+  ],
+  "engines": {
+    "node": ">=10.12.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "mocha": "xvfb-maybe electron-mocha --reporter spec && mocha --reporter spec",
+    "test": "npm run lint && npm run mocha",
+    "lint": "tsd && standard",
+    "standard": "standard",
+    "tsd": "tsd"
+  },
+  "standard": {
+    "env": {
+      "mocha": true
+    },
+    "globals": [
+      "BigInt"
+    ]
+  },
+  "tsd": {
+    "directory": "test"
+  },
+  "dependencies": {
+    "@electron/asar": "^3.2.3",
+    "asar": "^3.2.0",
+    "chromium-pickle-js": "^0.2.0",
+    "commander": "^5.0.0",
+    "glob": "^7.1.6",
+    "minimatch": "^3.0.4",
+    "pkg": "^5.8.1"
+  },
+  "optionalDependencies": {
+    "@types/glob": "^7.1.1"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/**/*"
+    ]
+  }
+}
