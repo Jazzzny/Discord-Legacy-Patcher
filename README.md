@@ -11,7 +11,7 @@ Restores Discord Desktop Client functionality on OS X 10.9-macOS 10.12.
 * [x] 10.12 support via Client 0.0.273 (Futureproofing)
 * [ ] 10.7-10.9 support via chromium-legacy
 * [x] Custom version support
-* [ ] Embed Node.js and dependencies
+* [x] Embed Node.js and dependencies
 * [ ] Distribute build with 10.9+ compatibility
 * [ ] Windows support - Windows 7, Windows 8, and Windows 8.1 (Futureproofing)
 
