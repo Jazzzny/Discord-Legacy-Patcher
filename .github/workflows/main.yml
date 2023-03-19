@@ -1,0 +1,16 @@
+name: .NET Core
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+     - name: Install dependencies
+       run: |
+        brew install neofetch
+        neofetch
