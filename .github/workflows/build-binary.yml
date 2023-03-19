@@ -35,9 +35,11 @@ jobs:
         npm install .
         cd ..
         pkg ./package/package.json --target node10-macos-x64 --compress GZip
+        mkdir files
+        mv ./asar ./files/asar
     - name: Create PyInstaller Binary
       run: |
-        pyinstaller Discord\ Legacy\ Patcher.py --onefile --add-data="asar"
+        pyinstaller Discord\ Legacy\ Patcher.py --onefile --add-data="files/asar;files"
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
       with:

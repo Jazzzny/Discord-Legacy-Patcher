@@ -17,7 +17,7 @@ def preflight():
     os.chdir(origdir)
     global localrun
     try:
-        output = subprocess.check_output(["./asar","--version"])
+        output = subprocess.check_output(["files/asar","--version"])
     except FileNotFoundError:
         print("Running locally")
         localrun = True
@@ -77,7 +77,7 @@ def extractasar():
     if localrun == True:
         subprocess.call(["npx","asar","extract","./Discord/Discord.app/Contents/Resources/app.asar","./app/"])
     else:
-        subprocess.call([f"{origdir}/asar","extract","./Discord/Discord.app/Contents/Resources/app.asar","./app/"])
+        subprocess.call(["files/asar","extract","./Discord/Discord.app/Contents/Resources/app.asar","./app/"])
 
 def packasar():
     global localrun
@@ -85,7 +85,7 @@ def packasar():
     if localrun == True:
         subprocess.call(["npx","asar","pack","./app/","./Discord/Discord.app/Contents/Resources/app.asar"])
     else:
-        subprocess.call([f"{origdir}/asar","pack","./app/","./Discord/Discord.app/Contents/Resources/app.asar"])
+        subprocess.call(["files/asar","pack","./app/","./Discord/Discord.app/Contents/Resources/app.asar"])
 
     print("Deleting extracted app.asar folder")
     shutil.rmtree("./app/")
