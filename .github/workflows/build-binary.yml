@@ -40,9 +40,11 @@ jobs:
     - name: Create PyInstaller Binary
       run: |
         pyinstaller Discord\ Legacy\ Patcher.py --onefile --add-data "files/asar:files"
+        python ./support/patchbinary.py
+        codesign --force --deep -s - ./dist/Discord\ Legacy\ Patcher
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
       with:
         name: Discord Legacy Patcher
-        path: /Users/runner/work/Discord-Legacy-Patcher/Discord-Legacy-Patcher/dist/Discord\ Legacy\ Patcher
+        path: ./dist/Discord\ Legacy\ Patcher
 
