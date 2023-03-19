@@ -18,7 +18,7 @@ def preflight():
     global localrun
     try:
         output = subprocess.check_output([f"{sys._MEIPASS}/files/asar","--version"])
-    except FileNotFoundError:
+    except:
         print("Running locally")
         localrun = True
         try:
