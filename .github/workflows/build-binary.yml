@@ -19,8 +19,8 @@ jobs:
     - name: Set up Python
     #due to github actions building their own python distribution, downloading and installing the official release is required for 10.9 support
       run: |
-        wget https://www.python.org/ftp/python/3.9.13/python-3.9.13-macosx10.9.pkg
-        sudo installer -pkg python-3.9.13-macosx10.9.pkg -target /
+        wget https://www.python.org/ftp/python/3.10.10/python-3.10.10-macos11.pkg
+        sudo installer -pkg python-3.10.10-macos11.pkg -target /
         python3 --version
     - name: Install dependencies
       run: |
