@@ -159,7 +159,6 @@ def preparepackage(version):
     print(f"Patching Complete")
     print("====================================================")
     input("The patched Discord Client has been placed in your Downloads folder.\nPress enter to continue.")
-    #subprocess.call(["open",os.path.expanduser('~/Downloads')+"/DiscordPatched/"])
     
 def mainmenu():
     clear()
