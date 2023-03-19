@@ -1,5 +1,8 @@
 import sys, os, tempfile, requests, subprocess, shutil
 version = "1.0"
+localrun = False
+origdir = os.getcwd()
+
 def clear():
     print("\033c", end='')
 
@@ -11,27 +14,34 @@ discordpackages = {
 }
 
 def preflight():
+    os.chdir(origdir)
+    global localrun
     try:
-        output = subprocess.check_output(["node","--version"])
-        nodever = output.decode("utf-8")[1:-1]
-        output1 = subprocess.check_output(["npm","--version"])
-        npmver = output1.decode("utf-8")[:-1]
-        if int(nodever.split(".")[0]) > 9:
-            print(f"✅ Node.js {nodever} installed\n✅ Node Package Manager {npmver} installed")
-        else:
-            print("❌ Node.js is too old! Please install Node.js 10+.")
-            sys.exit()
+        output = subprocess.check_output(["./asar","--version"])
     except FileNotFoundError:
-        print("❌ Node.js is not installed! Please install Node.js 10+.")
-        sys.exit()
-    try:
-        output2 = subprocess.check_output(["npx","asar","--version"])
-        asarver = output2.decode("utf-8")[1:-1]
-        print(f"✅ @electron/asar {asarver} installed")
-    except subprocess.CalledProcessError:
-        print("❌ Asar library is not installed! Please install it by running 'npm i @electron/asar'.")
-        sys.exit()
-    print("====================================================")
+        print("Running locally")
+        localrun = True
+        try:
+            output = subprocess.check_output(["node","--version"])
+            nodever = output.decode("utf-8")[1:-1]
+            output1 = subprocess.check_output(["npm","--version"])
+            npmver = output1.decode("utf-8")[:-1]
+            if int(nodever.split(".")[0]) > 9:
+                print(f"✅ Node.js {nodever} installed\n✅ Node Package Manager {npmver} installed")
+            else:
+                print("❌ Node.js is too old! Please install Node.js 10+.")
+                sys.exit()
+        except FileNotFoundError:
+            print("❌ Node.js is not installed! Please install Node.js 10+.")
+            sys.exit()
+        try:
+            output2 = subprocess.check_output(["npx","asar","--version"])
+            asarver = output2.decode("utf-8")[1:-1]
+            print(f"✅ @electron/asar {asarver} installed")
+        except subprocess.CalledProcessError:
+            print("❌ Asar library is not installed! Please install it by running 'npm i @electron/asar'.")
+            sys.exit()
+        print("====================================================")
 
 def mktemp():
     global temp_dir
@@ -62,12 +72,21 @@ def downloaddiscord(build):
                 f.write(chunk)
 
 def extractasar():
+    global localrun
     print("Extracting app.asar")
-    subprocess.call(["npx","asar","extract","./Discord/Discord.app/Contents/Resources/app.asar","./app/"])
+    if localrun == True:
+        subprocess.call(["npx","asar","extract","./Discord/Discord.app/Contents/Resources/app.asar","./app/"])
+    else:
+        subprocess.call([f"{origdir}/asar","extract","./Discord/Discord.app/Contents/Resources/app.asar","./app/"])
 
 def packasar():
+    global localrun
     print("Packing app.asar")
-    subprocess.call(["npx","asar","pack","./app/","./Discord/Discord.app/Contents/Resources/app.asar"])
+    if localrun == True:
+        subprocess.call(["npx","asar","pack","./app/","./Discord/Discord.app/Contents/Resources/app.asar"])
+    else:
+        subprocess.call([f"{origdir}/asar","pack","./app/","./Discord/Discord.app/Contents/Resources/app.asar"])
+
     print("Deleting extracted app.asar folder")
     shutil.rmtree("./app/")
 
