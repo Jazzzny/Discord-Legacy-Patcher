@@ -17,6 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3.6.0
     - name: Set up Python
+    #due to github actions building their own python distribution, downloading and installing the official release is required for 10.9 support
       run: |
         wget https://www.python.org/ftp/python/3.9.13/python-3.9.13-macosx10.9.pkg
         sudo installer -pkg python-3.9.13-macosx10.9.pkg -target /
