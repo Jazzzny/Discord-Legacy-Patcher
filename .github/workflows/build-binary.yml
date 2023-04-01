@@ -54,5 +54,5 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./dist/Discord\ Legacy\ Patcher
+        file: dist/Discord\ Legacy\ Patcher
         tag: ${{ github.ref }}
