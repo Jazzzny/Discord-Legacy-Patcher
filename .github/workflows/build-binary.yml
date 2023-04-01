@@ -5,6 +5,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -42,9 +44,15 @@ jobs:
         pyinstaller Discord\ Legacy\ Patcher.py --onefile --add-data "files/asar:files"
         python3 ./support/patchbinary.py
         codesign --force --deep -s - ./dist/Discord\ Legacy\ Patcher
-    - name: Upload a Build Artifact
+    - name: Upload Binary to Actions
       uses: actions/upload-artifact@v3.1.2
       with:
         name: Discord Legacy Patcher
         path: ./dist/Discord\ Legacy\ Patcher
-
+    - name: Upload Binary to Release
+      if: github.event_name == 'release'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ./dist/Discord\ Legacy\ Patcher
+        tag: ${{ github.ref }}

@@ -1,5 +1,5 @@
 import sys, os, tempfile, requests, subprocess, shutil
-version = "1.1"
+version = "1.2"
 localrun = False
 origdir = os.getcwd()
 
@@ -7,10 +7,10 @@ def clear():
     print("\033c", end='')
 
 discordpackages = {
-    1:["macOS 10.12","0.0.273"],
-    2:["OS X 10.11","0.0.273"],
-    3:["OS X 10.10","0.0.262"],
-    4:["OS X 10.9","0.0.255"]
+    "macOS 10.12" :  "0.0.273",
+    "OS X 10.11"  :  "0.0.273",
+    "OS X 10.10"  :  "0.0.262",
+    "OS X 10.9"   :  "0.0.255",
 }
 
 def preflight():
@@ -54,7 +54,7 @@ def copyfiles():
     subprocess.call(["/usr/bin/hdiutil","attach","./Discord.dmg","-nobrowse","-noverify","-quiet"])
     print("Copying files")
     try:
-        shutil.copytree("/Volumes/Discord/","./Discord/",symlinks=True) #will try to copy the entire applications folder if set to false
+        shutil.copytree("/Volumes/Discord/Discord.app/","./Discord/Discord.app/",symlinks=True) #will try to copy the entire applications folder if set to false
     except:
         print("Could not mount disk image/copy files. Please restart your machine.")
         sys.exit()
@@ -67,9 +67,29 @@ def downloaddiscord(build):
     print(f"Downloading Discord {build} from \n{url}\nThis may take a while.")
     response = requests.get(url, stream=True)
     with open("Discord.dmg", 'wb') as f:
+        total_size = int(response.headers.get('content-length', 0))
+        progress = 0
         for chunk in response.iter_content(chunk_size=8192):
             if chunk:
                 f.write(chunk)
+                progress += len(chunk)
+                percent_done = int(progress / total_size * 100)
+                print(f"Download progress: {percent_done}%", end='\r')
+
+def downloadlatestdiscord():
+    print("====================================================")
+    url = f"https://discord.com/api/download?platform=osx"
+    print(f"Downloading Discord (Latest) from \n{url}\nThis may take a while.")
+    response = requests.get(url, stream=True)
+    with open("Discord.dmg", 'wb') as f:
+        total_size = int(response.headers.get('content-length', 0))
+        progress = 0
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                f.write(chunk)
+                progress += len(chunk)
+                percent_done = int(progress / total_size * 100)
+                print(f"Download progress: {percent_done}%", end='\r')
 
 def extractasar():
     global localrun
@@ -99,6 +119,7 @@ def patchupdater():
         file.write(filedata)
 
 def fixminver(): #0.0.255 needs to have it's minimum version adjusted to support 10.9
+    print("Patching LSMinimumSystemVersion")
     with open('./Discord/Discord.app/Contents/Info.plist','r') as file:
         filedata = file.read()
         filedata = filedata.replace("10.10","10.9")
@@ -129,18 +150,23 @@ def cleartemp():
     os.remove("Discord_RW.dmg")
 def preparepackage(version):
     clear()
-    print("====================================================")
-    if version != 5:
-        print(f"Preparing to download Discord {discordpackages[version][1]} for {discordpackages[version][0]}")
-    else:
-        print(f"Preparing to download Discord")
-    print("====================================================")
-    
     mktemp()
-    if version != 5:
-        downloaddiscord(discordpackages[version][1])
+    if version != 1 and version != 6: #1 is latest, 6 is custom
+        selectedmacOSBuild = list(discordpackages.keys())[version-2]
+        selectedclient = discordpackages[selectedmacOSBuild]
+
+    print("====================================================")
+
+    if version == 1:
+        print("Preparing to download Discord (Latest) for 10.13+")
+        downloadlatestdiscord()
+    elif version == 6:
+        downloaddiscord(input("\nPlease enter the build you wish to download: "))
+        print(f"Preparing to download Discord")
     else:
-        downloaddiscord(input("Please enter the build you wish to download: "))
+        print(f"Preparing to download Discord {selectedclient} for {selectedmacOSBuild}")
+        downloaddiscord(selectedclient)
+    print("====================================================")
     clear()
     print("====================================================")
     print(f"Patching Discord")
@@ -149,7 +175,7 @@ def preparepackage(version):
     extractasar()
     patchupdater()
     packasar()
-    if version == 4:
+    if selectedclient == "0.0.255":
         fixminver()
     makerwdmg()
     movetodownloads()
@@ -173,15 +199,20 @@ patched disk image.
 """
 ,end="")
     preflight()
-    for i,v in discordpackages.items():
-        print(f"{i}. {v[0]} (Client {v[1]})")
-    print("5. Other")
-    print("6. Exit")
-    choice = int(input("Choose an Option: "))
-    if choice == 6:
+    print("1. Latest Client (Disables Discord Updates, macOS 10.13+)")
+    for ind, (ver,build) in enumerate(discordpackages.items()):
+        print(f"{ind+2}. {ver} (Client {build})")
+    print("6. Other Client")
+    print("7. Exit")
+    try:
+        choice = int(input("Choose an Option: "))
+    except:
+        input("Invalid option! Press enter to continue")
+        return
+    if choice == 7:
         sys.exit()
     else:
         preparepackage(choice)
-    
+
 while True:
     mainmenu()
