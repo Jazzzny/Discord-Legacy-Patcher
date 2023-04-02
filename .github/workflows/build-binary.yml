@@ -50,11 +50,9 @@ jobs:
         name: Discord Legacy Patcher
         path: ./dist/Discord\ Legacy\ Patcher
     - name: Package Binary for Release
-      #if: github.event_name == 'release'
+      if: github.event_name == 'release'
       run: |
-        ls
         zip Discord\ Legacy\ Patcher.zip ./dist/Discord\ Legacy\ Patcher
-        ls
     - name: Upload Binary to Release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
