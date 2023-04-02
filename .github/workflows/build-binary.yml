@@ -54,7 +54,7 @@ jobs:
       run: |
         mkdir releasefolder
         zip Discord\ Legacy\ Patcher.zip ./dist/Discord\ Legacy\ Patcher
-        mv Discord\ Legacy\ Patcher.zip ./releasefolder/Discord\ Legacy\ Patcher.zip
+        mv Discord\ Legacy\ Patcher.zip ./releasefolder/Discord-Legacy-Patcher.zip
     - name: Upload Binary to Release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
