@@ -15,4 +15,3 @@ Restores Discord Desktop Client functionality on OS X 10.9-macOS 10.12.
 * [x] Distribute build with 10.9+ compatibility
 * [ ] Windows support - Windows 7, Windows 8, and Windows 8.1 (Futureproofing)
 
-[Download latest build via Nightly.link](https://nightly.link/Jazzzny/Discord-Legacy-Patcher/workflows/build-binary/main/Discord%20Legacy%20Patcher.zip)
