@@ -52,11 +52,14 @@ jobs:
     - name: Package Binary for Release
       if: github.event_name == 'release'
       run: |
+        mkdir releasefolder
         zip Discord\ Legacy\ Patcher.zip ./dist/Discord\ Legacy\ Patcher
+        mv Discord\ Legacy\ Patcher.zip ./releasefolder/Discord\ Legacy\ Patcher.zip
     - name: Upload Binary to Release
       if: github.event_name == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: Discord\ Legacy\ Patcher.zip
+        file: releasefolder/*
         tag: ${{ github.ref }}
+        file_glob: true
