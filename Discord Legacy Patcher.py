@@ -175,8 +175,11 @@ def preparepackage(version):
     extractasar()
     patchupdater()
     packasar()
-    if selectedclient == "0.0.255":
-        fixminver()
+    try:
+        if selectedclient == "0.0.255":
+            fixminver()
+    except:
+        pass
     makerwdmg()
     movetodownloads()
     cleartemp()
