@@ -51,8 +51,12 @@ jobs:
         path: ./dist/Discord\ Legacy\ Patcher
     - name: Upload Binary to Release
       if: github.event_name == 'release'
+      run: |
+        ls
+        zip Discord\ Legacy\ Patcher.zip ./dist/Discord\ Legacy\ Patcher
+        ls
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./dist/Discord\ Legacy\ Patcher
+        file: Discord\ Legacy\ Patcher.zip
         tag: ${{ github.ref }}
