@@ -1,4 +1,6 @@
 # Changelog
+## Discord Legacy Patcher 1.2.1
+- Fix latest build selection
 
 ## Discord Legacy Patcher 1.2
 - Partial rewrite
