@@ -1,7 +1,7 @@
 import PyInstaller.__main__, subprocess
 
 PyInstaller.__main__.run([
-    'Discord\ Legacy\ Patcher.py',
+    'Discord Legacy Patcher.py',
     '--onefile',
     '--add-data="files/asar:files"'
 ])
