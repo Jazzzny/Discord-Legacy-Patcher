@@ -3,7 +3,7 @@ import PyInstaller.__main__, subprocess
 PyInstaller.__main__.run([
     'Discord Legacy Patcher.py',
     '--onefile',
-    '--add-data="files/asar:files"'
+    '--add-data=files/asar:files'
 ])
 
 #Source: https://github.com/dortania/OpenCore-Legacy-Patcher/blob/main/Build-Binary.command#L303-L329
