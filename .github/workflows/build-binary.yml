@@ -38,9 +38,7 @@ jobs:
         mv ./asar ./files/asar
     - name: Create PyInstaller Binary
       run: |
-        pyinstaller Discord\ Legacy\ Patcher.py --onefile --add-data "files/asar:files"
-        python3 ./support/patchbinary.py
-        codesign --force --deep -s - ./dist/Discord\ Legacy\ Patcher
+        python3 ./support/build.py
     - name: Upload Binary to Actions
       uses: actions/upload-artifact@v3.1.2
       with:
