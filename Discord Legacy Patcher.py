@@ -91,6 +91,29 @@ def downloadlatestdiscord():
                 percent_done = int(progress / total_size * 100)
                 print(f"Download progress: {percent_done}%", end='\r')
 
+def downloadopenasar(ver):
+    print(f"Downloading OpenAsar-Legacy for {ver}")
+    catalog = requests.get("https://api.github.com/repos/jazzzny/openasar-legacy/releases")
+    catalog = catalog.json()
+    compatiblebuilds = {}
+
+    for release in catalog:
+        if release["name"] >= ver:
+            for asset in release["assets"]:
+                if asset["name"].endswith(".asar"):
+                    compatiblebuilds[release["name"]]=asset["browser_download_url"]
+    if list(sorted(compatiblebuilds.items()))[0][0] != ver:
+        print(f"WARNING: No matching OpenAsar-Legacy build found! Will use closest match - {list(sorted(compatiblebuilds.items()))[0][0]}")
+    print(f"Downloading {list(sorted(compatiblebuilds.items()))[0][1]}")
+    response = requests.get(list(sorted(compatiblebuilds.items()))[0][1], stream=True)
+    with open("app.asar", 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+
+    print("Moving app.asar")
+    shutil.move("app.asar","./Discord/Discord.app/Contents/Resources/app.asar")
+
 def extractasar():
     global localrun
     print("Extracting app.asar")
@@ -161,7 +184,8 @@ def preparepackage(version):
         print("Preparing to download Discord (Latest) for 10.13+")
         downloadlatestdiscord()
     elif version == 6:
-        downloaddiscord(input("\nPlease enter the build you wish to download: "))
+        selectedclient = input("\nPlease enter the build you wish to download: ")
+        downloaddiscord(selectedclient)
         print(f"Preparing to download Discord")
     else:
         print(f"Preparing to download Discord {selectedclient} for {selectedmacOSBuild}")
@@ -172,9 +196,16 @@ def preparepackage(version):
     print(f"Patching Discord")
     print("====================================================")
     copyfiles()
-    extractasar()
-    patchupdater()
-    packasar()
+    if selectedclient > "0.0.255":
+        openasarselection = input("\aWould you like to install OpenAsar-Legacy? (y/n): ").lower()
+    else:
+        openasarselection = ""
+    if openasarselection == "y":
+        downloadopenasar(selectedclient)
+    else:
+        extractasar()
+        patchupdater()
+        packasar()
     try:
         if selectedclient == "0.0.255":
             fixminver()

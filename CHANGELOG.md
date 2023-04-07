@@ -1,4 +1,7 @@
 # Changelog
+## Discord Legacy Patcher 1.3
+- Add [OpenAsar-Legacy](https://github.com/Jazzzny/OpenAsar-Legacy/) Support (Fork of OpenAsar; compatible with 10.10+)
+
 ## Discord Legacy Patcher 1.2.1
 - Fix latest build selection
 
