@@ -1,14 +1,14 @@
 import PyInstaller.__main__, subprocess
 
 PyInstaller.__main__.run([
-    'Discord Legacy Patcher.py',
+    'Discord Legacy.py',
     '--onefile',
     '--add-data=files/asar:files'
 ])
 
 #Source: https://github.com/dortania/OpenCore-Legacy-Patcher/blob/main/Build-Binary.command#L303-L329
 print("Patching LC_VERSION_MIN_MACOSX")
-path = './dist/Discord Legacy Patcher'
+path = './dist/Discord Legacy'
 find = b'\x00\x0D\x0A\x00'
 replace = b'\x00\x09\x0A\x00'
 with open(path, 'rb') as f:
@@ -18,6 +18,6 @@ with open(path, 'rb') as f:
         f.write(data)
 
 print("Codesigning")
-subprocess.call(["codesign","--force","--deep","-s","-","./dist/Discord\ Legacy\ Patcher"])
+subprocess.call(["codesign","--force","--deep","-s","-","./dist/Discord\ Legacy"])
 
 
