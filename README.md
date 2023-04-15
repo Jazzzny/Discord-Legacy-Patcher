@@ -1,6 +1,6 @@
 <div align="center">
 <img src="./images/Logo.png" width=20% height=20%>
-<h1>Discord Legacy Patcher</h1>
+<h1>Discord Legacy</h1>
 </div>
 
 Restores Discord Desktop Client functionality on OS X 10.9, OS X 10.10, OS X 10.11, and macOS 10.12
@@ -20,5 +20,5 @@ Restores Discord Desktop Client functionality on OS X 10.9, OS X 10.10, OS X 10.
 | <img width="300" src="./images/Yosemite.png"> | <img width="300" src="./images/ElCapitan.png"> | <img width="300" src="./images/Sierra.png"> |
 
 ## Downloads
-[Download latest release from GitHub](https://github.com/Jazzzny/Discord-Legacy-Patcher/releases/latest
+[Download latest patcher release from GitHub](https://github.com/Jazzzny/Discord-Legacy-Patcher/releases/latest
 )
