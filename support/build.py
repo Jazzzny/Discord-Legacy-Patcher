@@ -17,7 +17,3 @@ with open(path, 'rb') as f:
     with open(path, 'wb') as f:
         f.write(data)
 
-print("Codesigning")
-subprocess.call(["codesign","--force","--deep","-s","-","./dist/Discord\ Legacy"])
-
-
