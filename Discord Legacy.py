@@ -1,5 +1,5 @@
 import sys, os, tempfile, requests, subprocess, shutil
-version = "1.2"
+version = "1.3-1"
 localrun = False
 origdir = os.getcwd()
 

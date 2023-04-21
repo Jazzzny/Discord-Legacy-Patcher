@@ -42,6 +42,7 @@ jobs:
     - name: Codesign Binary
       run: |
         codesign --force --deep -s - ./dist/Discord\ Legacy
+        chmod +x ./dist/Discord\ Legacy
     - name: Upload Binary to Actions
       uses: actions/upload-artifact@v3.1.2
       with:
