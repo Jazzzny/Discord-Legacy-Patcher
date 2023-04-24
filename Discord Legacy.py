@@ -19,7 +19,7 @@ def preflight():
     try:
         output = subprocess.check_output([f"{sys._MEIPASS}/files/asar","--version"])
     except:
-        print("Running locally")
+        print("Running from source code.\nYou can download a release from https://github.com/Jazzzny/Discord-Legacy/releases/")
         localrun = True
         try:
             output = subprocess.check_output(["node","--version"])
