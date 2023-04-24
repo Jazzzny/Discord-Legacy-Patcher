@@ -1,4 +1,4 @@
-import PyInstaller.__main__, subprocess
+import PyInstaller.__main__
 
 PyInstaller.__main__.run([
     'Discord Legacy.py',
