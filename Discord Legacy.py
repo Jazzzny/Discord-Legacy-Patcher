@@ -102,8 +102,11 @@ def downloadopenasar(ver):
             for asset in release["assets"]:
                 if asset["name"].endswith(".asar"):
                     compatiblebuilds[release["name"]]=asset["browser_download_url"]
-    if list(sorted(compatiblebuilds.items()))[0][0] != ver:
-        print(f"WARNING: No matching OpenAsar-Legacy build found! Will use closest match - {list(sorted(compatiblebuilds.items()))[0][0]}")
+    try:
+        if list(sorted(compatiblebuilds.items()))[0][0] != ver:
+            print(f"WARNING: No matching OpenAsar-Legacy build found! Will use closest match - {list(sorted(compatiblebuilds.items()))[0][0]}")
+    except:
+        print("WARNING: No matching OpenAsar-Legacy build found! Will use latest.")
     print(f"Downloading {list(sorted(compatiblebuilds.items()))[0][1]}")
     response = requests.get(list(sorted(compatiblebuilds.items()))[0][1], stream=True)
     with open("app.asar", 'wb') as f:
@@ -197,7 +200,7 @@ def preparepackage(version):
     print(f"Patching Discord")
     print("====================================================")
     copyfiles()
-    if selectedclient > "0.0.255":
+    if selectedclient > "0.0.255" and selectedclient != "0.0.999":
         openasarselection = input("\aWould you like to install OpenAsar-Legacy? (y/n): ").lower()
     else:
         openasarselection = ""
