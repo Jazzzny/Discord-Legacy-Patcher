@@ -174,6 +174,7 @@ def cleartemp():
 def preparepackage(version):
     clear()
     mktemp()
+    selectedclient = "0.0.999"
     if version != 1 and version != 6: #1 is latest, 6 is custom
         selectedmacOSBuild = list(discordpackages.keys())[version-2]
         selectedclient = discordpackages[selectedmacOSBuild]
@@ -206,11 +207,8 @@ def preparepackage(version):
         extractasar()
         patchupdater()
         packasar()
-    try:
-        if selectedclient == "0.0.255":
-            fixminver()
-    except:
-        pass
+    if selectedclient == "0.0.255":
+        fixminver()
     makerwdmg()
     movetodownloads()
     cleartemp()
