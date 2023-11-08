@@ -1,5 +1,9 @@
 # Changelog
 
+## Discord Legacy Patcher 1.4
+- Fix JavaScript issues on 10.11 and 10.12
+    - Note: 10.9 and 10.10 are currently buggy because they lack this fix, this may be fixed in a future release
+
 ## Discord Legacy Patcher 1.3-1
 - Fix damaged application issue
 

@@ -1,5 +1,5 @@
 import sys, os, tempfile, requests, subprocess, shutil
-version = "1.3-1"
+version = "1.4"
 localrun = False
 origdir = os.getcwd()
 
@@ -117,6 +117,32 @@ def downloadopenasar(ver):
     print("Moving app.asar")
     shutil.move("app.asar","./Discord/Discord.app/Contents/Resources/app.asar")
 
+def upgradeelectron(ver):
+    print("Upgrading Electron")
+    shutil.rmtree("./Discord/Discord.app/Contents/Frameworks/")
+    os.mkdir("./Discord/Discord.app/Contents/Frameworks/")
+    print("Downloading Electron 21.0.0-nightly.20220531")
+    response = requests.get("https://github.com/electron/nightlies/releases/download/v21.0.0-nightly.20220531/electron-v21.0.0-nightly.20220531-darwin-x64.zip", stream=True)
+    with open("electron.zip", 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                f.write(chunk)
+
+    print("Extracting Electron")
+    subprocess.call(["/usr/bin/unzip","electron.zip","-d","./Electron/"])
+
+    # Move all contents of Electron.app/Contents/Frameworks to Discord.app/Contents/Frameworks
+    print("Moving Electron")
+    for file in os.listdir("./Electron/Electron.app/Contents/Frameworks/"):
+        shutil.move(f"./Electron/Electron.app/Contents/Frameworks/{file}","./Discord/Discord.app/Contents/Frameworks/")
+
+    # Delete Electron
+    shutil.rmtree("./Electron/")
+
+def adhocsign():
+    print("Adhoc Signing Discord")
+    subprocess.call(["/usr/bin/codesign","--force","--deep","-s", "-", "./Discord/Discord.app"])
+
 def extractasar():
     global localrun
     print("Extracting app.asar")
@@ -170,10 +196,11 @@ def makerwdmg():
     print("Ejecting and finalizing disk image")
     subprocess.call(["/usr/bin/hdiutil","eject","/Volumes/Discord"])
     subprocess.call(["/usr/bin/hdiutil","convert","-format","UDZO","-o","./Discord.dmg","./Discord_RW.dmg","-quiet"])
-    
+
 def cleartemp():
     shutil.rmtree("./Discord")
     os.remove("Discord_RW.dmg")
+
 def preparepackage(version):
     clear()
     mktemp()
@@ -212,6 +239,11 @@ def preparepackage(version):
         packasar()
     if selectedclient == "0.0.255":
         fixminver()
+
+    if selectedclient == "0.0.273":
+        upgradeelectron(selectedclient)
+        adhocsign()
+
     makerwdmg()
     movetodownloads()
     cleartemp()
@@ -220,7 +252,7 @@ def preparepackage(version):
     print(f"Patching Complete")
     print("====================================================")
     input("The patched Discord Client has been placed in your Downloads folder.\nPress enter to continue.")
-    
+
 def mainmenu():
     clear()
     print(
@@ -228,7 +260,7 @@ f"""====================================================
 Discord Legacy Patcher {version}
 ====================================================
 Discord Legacy Patcher will download the chosen
-build, apply the required patches, and create a 
+build, apply the required patches, and create a
 patched disk image.
 ====================================================
 """
