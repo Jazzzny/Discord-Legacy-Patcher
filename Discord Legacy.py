@@ -7,6 +7,8 @@ def clear():
     print("\033c", end='')
 
 discordpackages = {
+    "macOS 10.14" :  "0.0.296",
+    "macOS 10.13" :  "0.0.296",
     "macOS 10.12" :  "0.0.273",
     "OS X 10.11"  :  "0.0.273",
     "OS X 10.10"  :  "0.0.262",
