@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --break-system-packages --upgrade pip
-        pip3 --break-system-packages install requests pyinstaller
+        pip3 install requests pyinstaller
         npm install -g pkg
     - name: Create Asar Binary
       run: | 
