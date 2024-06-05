@@ -22,8 +22,8 @@ jobs:
         sudo installer -pkg python-3.9.13-macosx10.9.pkg -target /
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
-        pip3 install requests pyinstaller
+        python3 -m pip install --break-system-packages --upgrade pip
+        pip3 --break-system-packages install requests pyinstaller
         npm install -g pkg
     - name: Create Asar Binary
       run: | 
