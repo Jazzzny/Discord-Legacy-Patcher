@@ -268,17 +268,17 @@ patched disk image.
 """
 ,end="")
     preflight()
-    print("1. Latest Client (Disables Discord Updates, macOS 10.13+)")
+    print("1. Latest Client (Disables Discord Updates, macOS 10.15+)")
     for ind, (ver,build) in enumerate(discordpackages.items()):
         print(f"{ind+2}. {ver} (Client {build})")
-    print("6. Other Client")
-    print("7. Exit")
+    print("7. Other Client")
+    print("8. Exit")
     try:
         choice = int(input("Choose an Option: "))
     except:
         input("Invalid option! Press enter to continue")
         return
-    if choice == 7:
+    if choice == 8:
         sys.exit()
     else:
         preparepackage(choice)
