@@ -1,5 +1,5 @@
 import sys, os, tempfile, requests, subprocess, shutil
-version = "1.4"
+version = "1.4.1"
 localrun = False
 origdir = os.getcwd()
 
@@ -207,16 +207,16 @@ def preparepackage(version):
     clear()
     mktemp()
     selectedclient = "0.0.999"
-    if version != 1 and version != 6: #1 is latest, 6 is custom
+    if version != 1 and version != 8: #1 is latest, 6 is custom
         selectedmacOSBuild = list(discordpackages.keys())[version-2]
         selectedclient = discordpackages[selectedmacOSBuild]
 
     print("====================================================")
 
     if version == 1:
-        print("Preparing to download Discord (Latest) for 10.13+")
+        print("Preparing to download Discord (Latest) for 10.15+")
         downloadlatestdiscord()
-    elif version == 6:
+    elif version == 8:
         selectedclient = input("\nPlease enter the build you wish to download: ")
         downloaddiscord(selectedclient)
         print(f"Preparing to download Discord")
@@ -271,14 +271,14 @@ patched disk image.
     print("1. Latest Client (Disables Discord Updates, macOS 10.15+)")
     for ind, (ver,build) in enumerate(discordpackages.items()):
         print(f"{ind+2}. {ver} (Client {build})")
-    print("7. Other Client")
-    print("8. Exit")
+    print("8. Other Client")
+    print("9. Exit")
     try:
         choice = int(input("Choose an Option: "))
     except:
         input("Invalid option! Press enter to continue")
         return
-    if choice == 8:
+    if choice == 9:
         sys.exit()
     else:
         preparepackage(choice)
