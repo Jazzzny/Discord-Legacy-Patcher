@@ -38,7 +38,7 @@ jobs:
         mv ./asar ./files/asar
     - name: Create PyInstaller Binary
       run: |
-        python3 ./support/build.py
+        /usr/local/bin/python3.9 ./support/build.py
     - name: Codesign Binary
       run: |
         codesign --force --deep -s - ./dist/Discord\ Legacy
