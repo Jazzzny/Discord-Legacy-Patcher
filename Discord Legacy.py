@@ -7,6 +7,7 @@ def clear():
     print("\033c", end='')
 
 discordpackages = {
+    "macOS 10.15" :  "0.0.336",
     "macOS 10.14" :  "0.0.296",
     "macOS 10.13" :  "0.0.296",
     "macOS 10.12" :  "0.0.273",
@@ -229,7 +230,7 @@ def preparepackage(version):
     print(f"Patching Discord")
     print("====================================================")
     copyfiles()
-    if selectedclient > "0.0.255" and selectedclient != "0.0.999":
+    if selectedclient in []:
         openasarselection = input("\aWould you like to install OpenAsar-Legacy? (y/n): ").lower()
     else:
         openasarselection = ""
@@ -268,11 +269,11 @@ patched disk image.
 """
 ,end="")
     preflight()
-    print("1. Latest Client (Disables Discord Updates, macOS 10.15+)")
+    print("1. Latest Client (Disables Discord Updates, macOS 11+)")
     for ind, (ver,build) in enumerate(discordpackages.items()):
         print(f"{ind+2}. {ver} (Client {build})")
-    print("8. Other Client")
-    print("9. Exit")
+    print("9. Other Client")
+    print("10. Exit")
     try:
         choice = int(input("Choose an Option: "))
     except:
