@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: macOS-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Node.js
       uses: actions/setup-node@v3.6.0
     - name: Set up Python
@@ -26,7 +26,7 @@ jobs:
         /usr/local/bin/python3.9 -m pip install requests pyinstaller
         npm install -g pkg
     - name: Create Asar Binary
-      run: | 
+      run: |
         npm pack @electron/asar@3.2.3
         tar -xzf ./electron-asar-3.2.3.tgz
         mv ./support/package.json ./package/package.json
@@ -44,7 +44,7 @@ jobs:
         codesign --force --deep -s - ./dist/Discord\ Legacy
         chmod +x ./dist/Discord\ Legacy
     - name: Upload Binary to Actions
-      uses: actions/upload-artifact@v3.1.2
+      uses: actions/upload-artifact@v4
       with:
         name: Discord Legacy
         path: ./dist/Discord\ Legacy
